@@ -83,11 +83,7 @@ class LoginForm extends Component {
           onChange={this.onChangePassword}
         />
         <CheckBox>
-          <InputCheckbox
-            type="checkbox"
-            onChange={this.onShowPassword}
-            checked
-          />
+          <InputCheckbox type="checkbox" onChange={this.onShowPassword} />
           <InputLabelText> Show Password </InputLabelText>
         </CheckBox>
       </>
@@ -124,7 +120,7 @@ class LoginForm extends Component {
           <LoginDetailsContainer>
             <LoginImage
               src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-              alt="nxt watch logo"
+              alt="website logo"
             />
             <FormElement onSubmit={this.submitForm}>
               <UsernameElement> {this.renderUsernameField()}</UsernameElement>

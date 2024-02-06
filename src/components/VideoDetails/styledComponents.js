@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const TrendingContainer = styled.div`
   background-color: '#f4f4f4';
+  height: 100vh;
 `
 
 export const SideBarContainer = styled.div`
@@ -56,7 +57,7 @@ export const LoaderContainer = styled.div`
 `
 
 export const VideoItemDetailsContainer = styled.div`
-  height: 90vh;
+  height: 100vh;
   overflow-x: auto;
   background-color: ${props =>
     props.theme === 'dark' ? '#0f0f0f' : '#f9f9f9'};
@@ -70,10 +71,14 @@ export const VideoItemDetailsContainer = styled.div`
 
 export const VideoDetailsContainer = styled.div`
   height: 100%;
+
+  margin-left: 30px;
 `
 
 export const PlayerContainer = styled.div`
-  height: 40%;
+  height: 50%;
+  margin-top: 20px;
+  width: 100%;
   @media screen and (min-width: 768px) {
     height: 70%;
     padding: 20px 20px 0px 20px;
@@ -93,7 +98,7 @@ export const VideoTitle = styled.p`
   font-weight: 500;
   font-size: 20px;
   font-family: Roboto;
-  color: ${props => (props.theme === 'dark' ? 'white' : '#0f0f0f')};
+  color: ${props => (props.darkMode ? '#94a3b8' : '#181818')};
   @media screen and (min-width: 768px) {
     font-size: 24px;
   }
@@ -153,5 +158,8 @@ export const ChannelDetailsText2 = styled(ChannelDetailsText)`
 `
 export const VideoDescriptionText = styled.p`
   color: ${props => (props.theme === 'dark' ? 'white' : '#0f0f0f')};
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  font-family: 'Roboto';
+  font-size: 15px;
+  color: #64748b;
 `

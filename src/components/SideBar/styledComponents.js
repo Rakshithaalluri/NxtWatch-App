@@ -34,7 +34,7 @@ export const NavLinkContainer = styled.li`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: ${props => props.bgColor};
+
   padding-left: 20px;
 `
 export const NavText = styled.p`

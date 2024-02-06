@@ -106,7 +106,7 @@ class Trending extends Component {
 
   renderLoadingView = () => (
     <LoaderContainer className="loader-container" data-testid="loader">
-      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+      <Loader type="ThreeDots" color="#3b82f6" height="50" width="50" />
     </LoaderContainer>
   )
 
@@ -144,7 +144,7 @@ class Trending extends Component {
           const {isDarkTheme} = value
 
           const bgColor = isDarkTheme ? '#0f0f0f' : '#f4f4f4'
-          const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
+          //  const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
           return (
             <TrendingContainer>
               <MainBody>
@@ -156,11 +156,11 @@ class Trending extends Component {
                   data-testid="trending"
                   bgColor={bgColor}
                 >
-                  <TrendingMenuContainer>
+                  <TrendingMenuContainer darkMode={isDarkTheme}>
                     <IconContainer>
                       <HiFire size={34} color="#ff0b37" />
                     </IconContainer>
-                    <MenuHeading color={textColor}>Trending</MenuHeading>
+                    <MenuHeading darkMode={isDarkTheme}>Trending</MenuHeading>
                   </TrendingMenuContainer>
                   {this.renderVideos()}
                 </TrendingVideoContainer>

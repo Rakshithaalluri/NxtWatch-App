@@ -18,14 +18,14 @@ const GameCard = props => {
     <ThemeContext.Consumer>
       {value => {
         const {isDarkTheme} = value
-        const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
+        // const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
 
         return (
           <NavLink to={`/videos/${id}`}>
             <Game>
               <GameContent>
                 <GameImage src={thumbnailUrl} alt="name" />
-                <GameTitle color={textColor}> {title} </GameTitle>
+                <GameTitle darkMode={isDarkTheme}> {title} </GameTitle>
                 <GameViews> {viewCount} Watching Worldwide </GameViews>
               </GameContent>
             </Game>

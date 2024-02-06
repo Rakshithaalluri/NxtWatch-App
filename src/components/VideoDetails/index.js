@@ -7,7 +7,7 @@ import {BiLike, BiDislike} from 'react-icons/bi'
 import {RiMenuAddLine} from 'react-icons/ri'
 import ReactPlayer from 'react-player'
 import ThemeContext from '../../context/ThemeContext'
-import SavedVideosContext from '../../context/SavedVideosContext'
+
 import Header from '../Header'
 import SideBar from '../SideBar'
 
@@ -47,8 +47,9 @@ class VideoDetails extends Component {
   state = {
     videoDetails: {},
     apiStatus: apiStatusConstants.initial,
-    like: false,
-    dislike: false,
+    isLike: false,
+    isDislike: false,
+    isSaved: false,
   }
 
   componentDidMount() {
@@ -151,30 +152,10 @@ class VideoDetails extends Component {
     </ThemeContext.Consumer>
   )
 
-  updateLikeState = () => {
-    this.setState(prevState => ({like: !prevState.like, dislike: false}))
-  }
-
-  updateDislikeState = () => {
-    this.setState(prevState => ({dislike: !prevState.dislike, like: false}))
-  }
-
   successView = () => {
-    const {videoDetails, like, dislike} = this.state
+    const {videoDetails, isLike, isDislike, isSaved} = this.state
 
-    const {
-      publishedAt,
-      description,
-      title,
-      videoUrl,
-      id,
-      viewCount,
-      channel,
-    } = videoDetails
-
-    const {profileImageUrl, name, subscriberCount} = channel
-
-    let postedAt = formatDistanceToNow(new Date(publishedAt))
+    let postedAt = formatDistanceToNow(new Date(videoDetails.publishedAt))
     const postedAtList = postedAt.split(' ')
 
     if (postedAtList.length === 3) {
@@ -185,86 +166,106 @@ class VideoDetails extends Component {
     return (
       <ThemeContext.Consumer>
         {value => {
-          const {isDarkTheme} = value
-          const theme = isDarkTheme ? 'dark' : 'light'
+          const {isDarkTheme, savedVideoButton} = value
 
-          const likeIsActive = like ? 'active' : 'not-active'
-          const dislikeIsActive = dislike ? 'active' : 'not-active'
+          const likeIconClassName = isLike ? 'selected' : 'not-selected'
+          const dislikeIconClassName = isDislike ? 'selected' : 'not-selected'
+          const saveButtonClass = isSaved ? 'selected' : 'not-selected'
+          const saveButtonText = isSaved ? 'Saved' : 'Save'
+
+          const updateLikeState = () => {
+            this.setState(prevState => ({
+              isLike: !prevState.isLike,
+              isDislike: false,
+            }))
+          }
+
+          const updateDislikeState = () => {
+            this.setState(prevState => ({
+              isDislike: !prevState.isDislike,
+              isLike: false,
+            }))
+          }
+
+          const onSaveButtonClicked = () => {
+            this.setState(prevState => ({isSaved: !prevState.isSaved}))
+            savedVideoButton({
+              videoDetails,
+            })
+          }
 
           return (
             <VideoDetailsContainer>
               <PlayerContainer>
                 <ReactPlayer
-                  url={videoUrl}
+                  url={videoDetails.videoUrl}
                   controls
                   width="100%"
                   height="100%"
                 />
               </PlayerContainer>
               <VideoTextContainer>
-                <VideoTitle theme={theme}>{title}</VideoTitle>
+                <VideoTitle darkMode={isDarkTheme}>
+                  {videoDetails.title}
+                </VideoTitle>
                 <LikesViewsContainer>
                   <ViewsPostedContainer>
-                    <ViewsText>{viewCount} views</ViewsText>
+                    <ViewsText>{videoDetails.viewCount} views</ViewsText>
                     <ViewsText> {postedAt} </ViewsText>
                   </ViewsPostedContainer>
                   <div>
                     <Button
                       type="button"
-                      theme={likeIsActive}
-                      onClick={this.updateLikeState}
+                      active={isLike}
+                      style={{color: '#64748b'}}
+                      onClick={updateLikeState}
                     >
-                      <BiLike size={20} style={{paddingTop: '6px'}} />
+                      <BiLike
+                        size={20}
+                        style={{paddingTop: '6px'}}
+                        className={`icon-in-video-item ${likeIconClassName}`}
+                      />
                       Like
                     </Button>
                     <Button
                       type="button"
-                      theme={dislikeIsActive}
-                      onClick={this.updateDislikeState}
+                      active={isDislike}
+                      style={{color: '#64748b'}}
+                      onClick={updateDislikeState}
                     >
-                      <BiDislike size={20} style={{paddingTop: '6px'}} />
+                      <BiDislike
+                        size={20}
+                        style={{paddingTop: '6px'}}
+                        className={`icon-in-video-item ${dislikeIconClassName}`}
+                      />
                       Dislike
                     </Button>
-                    <SavedVideosContext.Consumer>
-                      {val => {
-                        const {updateSave, savedVideosList} = val
 
-                        const present = savedVideosList.find(
-                          each => each.id === id,
-                        )
-                        const saveIsActive =
-                          present !== undefined ? 'active' : 'not-active'
-                        const saveText =
-                          present !== undefined ? 'Saved' : 'Save'
-                        return (
-                          <Button
-                            type="button"
-                            theme={saveIsActive}
-                            onClick={() => updateSave(videoDetails)}
-                          >
-                            <RiMenuAddLine
-                              size={20}
-                              style={{paddingTop: '6px'}}
-                            />
-                            {saveText}
-                          </Button>
-                        )
-                      }}
-                    </SavedVideosContext.Consumer>
+                    <Button type="button" onClick={onSaveButtonClicked}>
+                      <RiMenuAddLine
+                        size={20}
+                        style={{paddingTop: '6px'}}
+                        className={`icon-in-video-item ${saveButtonClass} `}
+                      />
+                      {saveButtonText}
+                    </Button>
                   </div>
                 </LikesViewsContainer>
                 <hr />
                 <ChannelDetails>
-                  <ChannelLogo src={profileImageUrl} alt="channel logo" />
+                  <ChannelLogo
+                    src={videoDetails.profileImageUrl}
+                    alt="channel logo"
+                  />
                   <div>
-                    <ChannelDetailsText theme={theme}>
-                      {name}
-                    </ChannelDetailsText>
-                    <ChannelDetailsText2>{subscriberCount}</ChannelDetailsText2>
+                    <ChannelDetailsText>{videoDetails.name}</ChannelDetailsText>
+                    <ChannelDetailsText2>
+                      {videoDetails.subscriberCount}
+                    </ChannelDetailsText2>
                   </div>
                 </ChannelDetails>
-                <VideoDescriptionText theme={theme}>
-                  {description}
+                <VideoDescriptionText>
+                  {videoDetails.description}
                 </VideoDescriptionText>
               </VideoTextContainer>
             </VideoDetailsContainer>

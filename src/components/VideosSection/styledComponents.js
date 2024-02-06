@@ -6,6 +6,7 @@ export const SingleVideoContent = styled.li`
   flex-direction: column;
   justify-content: center;
   // border: 1px black solid;
+  background-color: ${props => (props.darkMode ? '#181818' : '#ffffff')};
   width: 315px;
   margin: 8px;
   padding: 0px;
@@ -48,7 +49,7 @@ export const VideoDescription = styled.div`
   padding-left: 5px;
 `
 export const VideoTitle = styled.p`
-  color: #212121;
+  color: ${props => (props.darkMode ? '#94a3b8' : '#181818')};
   font-family: 'Roboto';
   font-size: 14px;
   font-weight: 500;

@@ -21,18 +21,13 @@ import {
 
 const VideosSection = props => {
   const {videoDetails} = props
-  const {
-    channel: {name, profileImageUrl},
-    id,
-    publishedAt,
-    thumbnailUrl,
-    title,
-    viewCount,
-  } = videoDetails
 
-  const formattedDistance = formatDistanceToNow(new Date(publishedAt), {
-    addSuffix: false,
-  })
+  const formattedDistance = formatDistanceToNow(
+    new Date(videoDetails.publishedAt),
+    {
+      addSuffix: false,
+    },
+  )
 
   const cleanedFormattedDistance = formattedDistance.replace(
     /(?:almost|over|about)\s+/i,
@@ -43,23 +38,32 @@ const VideosSection = props => {
     <ThemeContext.Consumer>
       {value => {
         const {isDarkTheme} = value
-        const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
+        //  const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
 
         return (
-          <NavLink to={`/videos/${id}`}>
-            <SingleVideoContent>
-              <VideoImage src={thumbnailUrl} alt="video thumbnail" />
+          <NavLink to={`/videos/${videoDetails.id}`}>
+            <SingleVideoContent darkMode={isDarkTheme}>
+              <VideoImage
+                src={videoDetails.thumbnailUrl}
+                alt="video thumbnail"
+              />
               <VideoDescriptionContainer>
-                <ChannelLogo src={profileImageUrl} alt="channel logo" />
+                <ChannelLogo
+                  src={videoDetails.profileImageUrl}
+                  alt="channel logo"
+                />
                 <VideoDescription>
-                  <VideoTitle color={textColor}> {title} </VideoTitle>
+                  <VideoTitle darkMode={isDarkTheme}>
+                    {' '}
+                    {videoDetails.title}{' '}
+                  </VideoTitle>
                   <VideoTimerContent>
-                    <ChannelName color={textColor}> {name} </ChannelName>
+                    <ChannelName darkMode={isDarkTheme}>
+                      {' '}
+                      {videoDetails.name}{' '}
+                    </ChannelName>
                     <PublishedContainer>
-                      <ViewCount color={textColor}>
-                        {' '}
-                        {viewCount} views{' '}
-                      </ViewCount>
+                      <ViewCount> {videoDetails.viewCount} views </ViewCount>
                       <PublishedDate>
                         {' '}
                         {cleanedFormattedDistance}{' '}

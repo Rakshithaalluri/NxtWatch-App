@@ -27,13 +27,13 @@ export const GameImage = styled.img`
   width: 226px;
   border-radius: 13px;
   @media screen and (max-width: 576px) {
-    width: 200px;
-    height: 280px;
+    width: 170px;
+    height: 260px;
   }
 `
 
 export const GameTitle = styled.h1`
-  color: #000000;
+  color: ${props => (props.darkMode ? '#f9f9f9' : '#000000')};
   font-size: 15px;
   font-family: 'Roboto';
   margin-bottom: 0px;

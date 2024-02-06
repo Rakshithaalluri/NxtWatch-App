@@ -136,8 +136,8 @@ class Gaming extends Component {
         {value => {
           const {isDarkTheme} = value
 
-          const bgColor = isDarkTheme ? '#0f0f0f' : '#f9f9f9'
-          const textColor = isDarkTheme ? '#f9f9f9' : '#231f20'
+          // const bgColor = isDarkTheme ? '#0f0f0f' : '#f9f9f9'
+          //   const textColor = isDarkTheme ? '#f9f9f9' : ''
 
           return (
             <GamingContainer>
@@ -146,12 +146,15 @@ class Gaming extends Component {
                 <SideBarContainer>
                   <SideBar />
                 </SideBarContainer>
-                <TrendingVideoContainer data-testid="gaming" bgColor={bgColor}>
-                  <TrendingMenuContainer>
+                <TrendingVideoContainer
+                  data-testid="gaming"
+                  darkMode={isDarkTheme}
+                >
+                  <TrendingMenuContainer darkMode={isDarkTheme}>
                     <IconContainer>
                       <SiYoutubegaming size={34} color="#ff0b37" />
                     </IconContainer>
-                    <MenuHeading color={textColor}>Gaming</MenuHeading>
+                    <MenuHeading darkMode={isDarkTheme}>Gaming</MenuHeading>
                   </TrendingMenuContainer>
                   {this.renderGamesList()}
                 </TrendingVideoContainer>

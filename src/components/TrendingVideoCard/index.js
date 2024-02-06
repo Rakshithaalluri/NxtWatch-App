@@ -52,14 +52,11 @@ const TrendingVideoCard = props => {
                 <LogoContainer>
                   <SmLogoImg src={profileImageUrl} alt="channel logo" />
                   <TrendDescription>
-                    <Heading color={textColor}>{title}</Heading>
+                    <Heading darkMode={isDarkTheme}>{title}</Heading>
                     <VideoTimerContent>
-                      <ChannelName color={textColor}> {name} </ChannelName>
+                      <ChannelName> {name} </ChannelName>
                       <PublishedContainer>
-                        <ViewCount color={textColor}>
-                          {' '}
-                          {viewCount} views{' '}
-                        </ViewCount>
+                        <ViewCount> {viewCount} views </ViewCount>
                         <PublishedDate>
                           {' '}
                           {cleanedFormattedDistance}{' '}

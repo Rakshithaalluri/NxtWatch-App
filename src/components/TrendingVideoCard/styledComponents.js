@@ -54,7 +54,7 @@ export const TrendDescription = styled.div`
 `
 export const Heading = styled.h1`
   font-family: 'Roboto';
-  color: #000000;
+  color: ${props => (props.darkMode ? '#f9f9f9' : '#000000')};
   font-size: 20px;
   @media screen and (max-width: 576px) {
     margin-bottom: 0px;

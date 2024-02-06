@@ -20,7 +20,7 @@ export const SideBarContainer = styled.div`
 export const TrendingVideoContainer = styled.div`
   width: 200%;
   padding-top: 60px;
-  background-color: #f4f4f4;
+  background-color: ${props => props.bgColor};
 `
 export const TrendingMenuContainer = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export const TrendingMenuContainer = styled.div`
   align-items: center;
   height: 120px;
   padding-left: 80px;
-  background-color: #ebebeb;
+  background-color: ${props => (props.darkMode ? '#0f0f0f' : '#ebebeb')};
   @media screen and (max-width: 576px) {
     padding-left: 0px;
   }
@@ -45,7 +45,7 @@ export const IconContainer = styled.div`
 `
 
 export const MenuHeading = styled.h1`
-  color: #0f0f0f;
+  color: ${props => (props.darkMode ? '#f9f9f9' : '#231f20')};
   font-family: 'Roboto';
 `
 export const TrendingVideos = styled.ul`

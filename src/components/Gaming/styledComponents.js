@@ -20,7 +20,8 @@ export const SideBarContainer = styled.div`
 export const TrendingVideoContainer = styled.div`
   height: 100%;
   width: 100%;
-  padding-top: 80px;
+  padding-top: 60px;
+  background-color: ${props => (props.darkMode ? '#000000' : '#f9f9f9')};
 `
 export const TrendingMenuContainer = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ export const TrendingMenuContainer = styled.div`
   width: 120%;
   padding-left: 40px;
   // border: 1px black solid;
-  background-color: #f4f4f4;
+  background-color: ${props => (props.darkMode ? '#0f0f0f' : '#f4f4f4')};
 `
 export const IconContainer = styled.div`
   padding: 23px;
@@ -42,6 +43,7 @@ export const IconContainer = styled.div`
 export const MenuHeading = styled.h1`
   color: #0f0f0f;
   font-family: 'Roboto';
+  color: ${props => (props.darkMode ? '#f9f9f9' : '#231f20')};
 `
 export const GamesContainer = styled.ul`
   display: flex;
@@ -49,9 +51,8 @@ export const GamesContainer = styled.ul`
   align-items: center;
   flex-wrap: wrap;
   padding: 0px;
-  width: 110%;
+  width: 100%;
   //border: 1px red solid;
-  margin-left: 40px;
   @media screen and (max-width: 576px) {
     margin-left: 20px;
   }

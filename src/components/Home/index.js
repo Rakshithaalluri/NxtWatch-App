@@ -1,9 +1,7 @@
 /* eslint-disable import/named */
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-
 import {AiOutlineClose} from 'react-icons/ai'
-
 import Loader from 'react-loader-spinner'
 import {BsSearch} from 'react-icons/bs'
 
@@ -31,6 +29,7 @@ import {
   RetryButton,
   SearchButton,
 } from './styledComponents'
+import ThemeContext from '../../context/ThemeContext'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -59,7 +58,7 @@ class Home extends Component {
 
     const jwtToken = Cookies.get('jwt_token')
 
-    const apiUrl = `https://apis.ccbp.in/videos/all?search=${searchInput}`
+    const homeVideosApiUrl = `https://apis.ccbp.in/videos/all?search=${searchInput}`
     const options = {
       headers: {
         authorization: `Bearer ${jwtToken}`,
@@ -67,7 +66,7 @@ class Home extends Component {
       method: 'GET',
     }
 
-    const response = await fetch(apiUrl, options)
+    const response = await fetch(homeVideosApiUrl, options)
     // console.log(response)
     if (response.ok) {
       const data = await response.json()
@@ -111,7 +110,7 @@ class Home extends Component {
           />
           <PremiumText>
             {' '}
-            Buy Next Watch Premium prepaid plans with UPI{' '}
+            Buy Nxt Watch Premium prepaid plans with UPI{' '}
           </PremiumText>
           <GetItNowButton type="button"> GET IT NOW </GetItNowButton>
         </NxtWatchPremium>
@@ -137,22 +136,40 @@ class Home extends Component {
     }
   }
 
+  onSearchInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
   renderSearchInput = () => {
     const {searchInput} = this.state
     return (
-      <SearchInputContainer>
-        <SearchInput
-          value={searchInput}
-          type="search"
-          className="search-input"
-          placeholder="Search"
-          onChange={this.onChangeSearchInput}
-          onKeyDown={this.onEnterKeyDown}
-        />
-        <SearchButton type="button" data-testid="searchButton">
-          <BsSearch size="14" />
-        </SearchButton>
-      </SearchInputContainer>
+      <ThemeContext.Consumer>
+        {value => {
+          const {isDarkTheme} = value
+
+          return (
+            <SearchInputContainer darkMode={isDarkTheme}>
+              <SearchInput
+                value={searchInput}
+                type="search"
+                className="search-input"
+                placeholder="Search"
+                onChange={this.onChangeSearchInput}
+                onKeyDown={this.onEnterKeyDown}
+                darkMode={isDarkTheme}
+              />
+              <SearchButton
+                type="button"
+                data-testid="searchButton"
+                darkMode={isDarkTheme}
+                onClick={this.onSearchInput}
+              >
+                <BsSearch size="14" />
+              </SearchButton>
+            </SearchInputContainer>
+          )
+        }}
+      </ThemeContext.Consumer>
     )
   }
 
@@ -182,11 +199,14 @@ class Home extends Component {
 
   renderFailureView = () => (
     <FailureSearchContainer>
-      <FailureImage src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png" />
+      <FailureImage
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt="failure view"
+      />
       <FailureHeading> Oops! Something Went Wrong </FailureHeading>
       <FailureDescription>
         {' '}
-        We are having trouble to complete your request. Please try again.{' '}
+        We are having some trouble to complete your request. Please try again.{' '}
       </FailureDescription>
       <RetryButton type="button" onClick={this.getAllVideos}>
         {' '}
@@ -207,13 +227,20 @@ class Home extends Component {
       return this.renderEmptySearchResults()
     }
     return (
-      <VideosContainer>
-        <VideosListContainer>
-          {videosList.map(eachVideo => (
-            <VideosSection key={eachVideo.id} videoDetails={eachVideo} />
-          ))}
-        </VideosListContainer>
-      </VideosContainer>
+      <ThemeContext.Consumer>
+        {value => {
+          const {isDarkTheme} = value
+          return (
+            <VideosContainer darkMode={isDarkTheme}>
+              <VideosListContainer>
+                {videosList.map(eachVideo => (
+                  <VideosSection key={eachVideo.id} videoDetails={eachVideo} />
+                ))}
+              </VideosListContainer>
+            </VideosContainer>
+          )
+        }}
+      </ThemeContext.Consumer>
     )
   }
 
@@ -235,16 +262,24 @@ class Home extends Component {
   render() {
     // const {videosList} = this.state
     return (
-      <>
-        <Header />
-        <HomeContainer data-testid="home">
-          <SideBar />
-          <Rendering>
-            {this.renderSearchBannerView()}
-            {this.renderVideos()}
-          </Rendering>
-        </HomeContainer>
-      </>
+      <ThemeContext.Consumer>
+        {value => {
+          const {isDarkTheme} = value
+
+          return (
+            <>
+              <Header />
+              <HomeContainer darkMode={isDarkTheme} data-testid="home">
+                <SideBar />
+                <Rendering>
+                  {this.renderSearchBannerView()}
+                  {this.renderVideos()}
+                </Rendering>
+              </HomeContainer>
+            </>
+          )
+        }}
+      </ThemeContext.Consumer>
     )
   }
 }

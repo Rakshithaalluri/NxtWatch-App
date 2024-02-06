@@ -80,7 +80,8 @@ export const RemoveButton = styled.button`
 export const SearchInputContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: #f8fafc;
+  //  background-color: #f8fafc;
+  background-color: ${props => (props.darkMode ? '#000000' : '#f8fafc')};
   border-radius: 0px;
   padding-left: 16px;
   padding-top: 8px;
@@ -89,26 +90,25 @@ export const SearchInputContainer = styled.div`
 `
 
 export const SearchInput = styled.input`
-  background-color: #f1f5f9;
+  // background-color: #f1f5f9;
+  background-color: ${props => (props.darkMode ? '#000000' : '#f1f5f9')};
   color: #0f172a;
   font-family: 'Roboto';
   font-size: 14px;
   font-weight: 500;
-  border: 1px #cccccc solid;
+  border: ${props =>
+    props.darkMode ? '1px #616e7c solid' : '1px #cccccc solid'};
   flex-grow: 1;
   height: 33px;
   width: 80px;
   max-width: 380px;
-  background-color: #ffffff;
   padding-left: 15px;
   border-radius: 2px;
 `
 export const VideosContainer = styled.div`
   display: flex;
   padding-top: 0px;
-  //padding-left: 18px;
-  // border: 1px black solid;
-  background-color: #f8fafc;
+  background-color: ${props => (props.darkMode ? '#000000' : '#f8fafc')};
   color: #000000;
   @media screen and (max-width: 576px) {
     width: 100%;
@@ -167,6 +167,8 @@ export const RetryButton = styled.button`
 export const SearchButton = styled.button`
   height: 32px;
   width: 55px;
-  background-color: #f1f5f9;
-  border: 1px #cbd5e1 solid;
+  background-color: ${props => (props.darkMode ? '#212121' : '#f1f5f9')};
+  // background-color: #f1f5f9;
+  border: ${props =>
+    props.darkMode ? '0.5px #424242 solid' : '1px #cbd5e1 solid'};
 `
